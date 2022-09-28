@@ -32,3 +32,5 @@ Link
 [title](https://www.example.com)
 
 Image 	![alt text](image.jpg)
+
+To skip a line: add 2 spaces
