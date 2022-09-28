@@ -9,3 +9,6 @@ Documentation: https://www.rust-lang.org/learn
 
 ## TypeScript
 Documentation: https://www.typescriptlang.org/docs/
+
+## Go to the Universe 202X organized by GitHub
+Website: https://githubuniverse.com/
