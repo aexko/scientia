@@ -12,3 +12,4 @@ Documentation: https://www.typescriptlang.org/docs/
 
 ## Go to the Universe 202X organized by GitHub
 Website: https://githubuniverse.com/
+Cost: ~368$CAD
