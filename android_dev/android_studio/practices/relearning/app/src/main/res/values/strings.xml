@@ -5,4 +5,5 @@
     <string name="Make_it_count">make it count!</string>
     <string name="zero">0</string>
     <string name="toast_message">This is the toast message !</string>
+    <string name="Count_up">Click to count up!</string>
 </resources>
