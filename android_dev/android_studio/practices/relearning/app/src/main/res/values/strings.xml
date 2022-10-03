@@ -4,4 +4,5 @@
     <string name="Make_a_toast">make a toast!</string>
     <string name="Make_it_count">make it count!</string>
     <string name="zero">0</string>
+    <string name="toast_message">This is the toast message !</string>
 </resources>
