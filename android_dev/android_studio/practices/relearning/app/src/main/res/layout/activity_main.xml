@@ -11,19 +11,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="276dp"
+        android:onClick="increaseCount"
         android:text="@string/Count_up"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="increaseCount" />>
+        app:layout_constraintTop_toTopOf="parent" />>
 
     <Button
         android:id="@+id/button_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/purple_500"
+        android:onClick="showToast"
         android:text="@string/Make_a_toast"
         android:textColor="@color/black"
         android:textColorHighlight="@color/teal_700"
@@ -36,8 +37,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_count"
-        app:layout_constraintVertical_bias="0.22"
-        android:onClick="showToast" />
+        app:layout_constraintVertical_bias="0.22" />
 
 
     <TextView
@@ -57,5 +57,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_count" />
+
+    <TextView
+        android:id="@+id/username1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Username"
+        app:layout_constraintBottom_toBottomOf="@+id/editTxt_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.338" />
+
+    <ImageButton
+        android:id="@+id/change_name_button"
+        android:layout_width="49dp"
+        android:layout_height="52dp"
+        android:contentDescription="@string/image_prevue"
+        android:onClick="changeName"
+        app:layout_constraintBottom_toTopOf="@+id/button_count"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTxt_username"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <EditText
+        android:id="@+id/editTxt_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="@string/enter_a_username"
+        app:layout_constraintBottom_toTopOf="@+id/button_count"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

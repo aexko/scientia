@@ -6,4 +6,7 @@
     <string name="zero">0</string>
     <string name="toast_message">This is the toast message !</string>
     <string name="Count_up">Click to count up!</string>
+    <string name="Username">username</string>
+    <string name="enter_a_username">enter a username</string>
+    <string name="image_prevue">image_prevue</string>
 </resources>
