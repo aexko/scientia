@@ -22,10 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Take_photos"
         tools:targetApi="31">
+        <!-- CHANGER AVEC LE NOM DE PACKAGE -->
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
+            android:authorities="ca.qc.take_photos"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
