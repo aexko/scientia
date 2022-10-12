@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">create_an_alarm</string>
+    <string name="create_an_alarm">CREATE AN ALARM</string>
+    <string name="start_a_timer">START A TIMER</string>
+</resources>
