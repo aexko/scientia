@@ -45,4 +45,6 @@ public class MainActivity extends AppCompatActivity {
         username.setText(inputUser.getText());
         Log.d("checkingChangingName", "The user entered: " + inputUser.getText().toString());
     }
+
+
 }

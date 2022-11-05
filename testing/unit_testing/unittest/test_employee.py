@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from employee import Employee
+import requests
 
 
 class TestEmployee(unittest.TestCase):

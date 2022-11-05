@@ -44,3 +44,23 @@ Client Dev | Ops
 ### DevOPS
 Client Dev Ops
 CD/CI (continuous integration and continuous delivery/continuous)-> dev and continuous integration
+
+# DevOps
+Avec DevOps, on commence à s'intéresser aux outils qui attaquent certains problèmes
+
+## Extreme Programming
+Vous dit plus qu'est-ce qui se passe à l'écran que l'organisation  en équipe
+- Petite équipe
+- Itération fixe + incrément
+- Client dédié intégré à l'équipe
+- Produit clean : beaucoup de refactory puisqu'on n'est pas sûrs si le projet va être abandonné ou non, ou repris dans quelques temps. Le projet se tient tout seul et peut être repris à n'importe quel temps
+- Ils sont payés pour les heures qu'ils ont travaillées
+- testé: 
+  - tests automatisés
+    - avec tests unitaires, avec des tests d'intégration pour s'assurer que les APIs se communiquent bien entre eux, avec des tests d'interface
+  - TDD
+    - j'ai pensé à mon truc -> je l'ai implanté -> j'ai fait mes tests
+Xtreme Programming: on prend les meilleures pratiques dans la programmation et on les max à 1000  
+Pair Programming: rotation des partenaires
+- propriété conjointe/collective du produit
+  - Il faut réduire le truck factor: truck factor > 1
