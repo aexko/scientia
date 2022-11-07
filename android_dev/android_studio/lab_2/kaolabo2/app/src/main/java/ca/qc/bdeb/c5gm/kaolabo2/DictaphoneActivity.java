@@ -32,8 +32,6 @@ public class DictaphoneActivity extends AppCompatActivity {
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private FloatingActionButton btn_enregistrer, btn_jouer;
-    private boolean enregistrementEnCours = false;
-    private boolean jouerEnCours = false;
 
 
     @Override
@@ -45,13 +43,18 @@ public class DictaphoneActivity extends AppCompatActivity {
         btn_jouer = findViewById(R.id.btn_jouer);
 
         btn_enregistrer.setOnClickListener(new View.OnClickListener() {
+            private boolean enregistrementEnCours = true;
+
 
             @Override
             public void onClick(View v) {
+
                 if (enregistrementEnCours) {
                     btn_enregistrer.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24);
                     enregistrementEnCours = false;
                     Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
+
+                    onRecord(enregistrementEnCours);
 
                 } else {
                     btn_enregistrer.setImageResource(R.drawable.ic_baseline_stop_24);
@@ -59,22 +62,26 @@ public class DictaphoneActivity extends AppCompatActivity {
                     Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
 
                 }
+                enregistrementEnCours = !enregistrementEnCours;
             }
         });
 
         btn_jouer.setOnClickListener(new View.OnClickListener() {
+            private boolean jouerEnCours = true;
             @Override
             public void onClick(View v) {
+                onPlay(jouerEnCours);
                 if (jouerEnCours) {
                     btn_jouer.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                    jouerEnCours = false;
+//                    jouerEnCours = false;
                     Log.d("Jouer", "jouer " + jouerEnCours);
 
                 } else {
                     btn_jouer.setImageResource(R.drawable.ic_baseline_stop_24);
-                    jouerEnCours = true;
+//                    jouerEnCours = true;
                     Log.d("Jouer", "jouer " + jouerEnCours);
                 }
+                jouerEnCours = !jouerEnCours;
             }
         });
     }
