@@ -1,89 +1,98 @@
 package ca.qc.bdeb.c5gm.kaolabo2;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DictaphoneActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static final String fileName = null;
+    private String fileName = "recorded.3gp";
 
     //    private final RecordButton recordButton = null;
 //    private final PlayButton playButton = null;
-    private MediaRecorder recorder = null;
-    private MediaPlayer player = null;
+    private MediaRecorder recorder;
+    private MediaPlayer player;
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private FloatingActionButton btn_enregistrer, btn_jouer;
 
+
+    // Requesting permission to RECORD_AUDIO
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictaphone);
 
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+        fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
+
         btn_enregistrer = findViewById(R.id.btn_enregistrer);
         btn_jouer = findViewById(R.id.btn_jouer);
 
         btn_enregistrer.setOnClickListener(new View.OnClickListener() {
             private boolean enregistrementEnCours = true;
-
-
             @Override
             public void onClick(View v) {
-
                 if (enregistrementEnCours) {
-                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24);
-                    enregistrementEnCours = false;
+                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_stop_24);
                     Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
-
-                    onRecord(enregistrementEnCours);
+                    startRecording();
 
                 } else {
-                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_stop_24);
-                    enregistrementEnCours = true;
+                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24);
+
                     Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
+                    stopRecording();
 
                 }
                 enregistrementEnCours = !enregistrementEnCours;
             }
+
         });
 
         btn_jouer.setOnClickListener(new View.OnClickListener() {
             private boolean jouerEnCours = true;
             @Override
             public void onClick(View v) {
-                onPlay(jouerEnCours);
                 if (jouerEnCours) {
-                    btn_jouer.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                    btn_jouer.setImageResource(R.drawable.ic_baseline_stop_24);
+
 //                    jouerEnCours = false;
                     Log.d("Jouer", "jouer " + jouerEnCours);
+                    startPlaying();
 
                 } else {
-                    btn_jouer.setImageResource(R.drawable.ic_baseline_stop_24);
+                    btn_jouer.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+
 //                    jouerEnCours = true;
                     Log.d("Jouer", "jouer " + jouerEnCours);
+                    stopPlaying();
+
                 }
                 jouerEnCours = !jouerEnCours;
+
             }
         });
+
     }
 
     @Override
@@ -99,21 +108,6 @@ public class DictaphoneActivity extends AppCompatActivity {
 
     }
 
-    private void onRecord(boolean start) {
-        if (start) {
-            startRecording();
-        } else {
-            stopRecording();
-        }
-    }
-
-    private void onPlay(boolean start) {
-        if (start) {
-            startPlaying();
-        } else {
-            stopPlaying();
-        }
-    }
 
     private void startPlaying() {
         player = new MediaPlayer();
@@ -124,35 +118,39 @@ public class DictaphoneActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
+        Log.d("ACTIONS", "startPlaying: ");
     }
 
     private void stopPlaying() {
         player.release();
-        player = null;
+        Log.d("ACTIONS", "stopPlaying: ");
+
     }
 
     private void startRecording() {
         recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
+
             recorder.prepare();
+            recorder.start();
+            Log.d("ACTIONS", "startRecording: ");
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
 
-        recorder.start();
+
     }
 
     private void stopRecording() {
         recorder.stop();
         recorder.release();
-        recorder = null;
-    }
+        Log.d("ACTIONS", "stopRecording: ");
 
+    }
 //    @Override
 //    public void onStop() {
 //        super.onStop();
