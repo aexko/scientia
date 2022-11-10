@@ -32,7 +32,7 @@ class Ground:
 
     def __init__(self, style: GroundStyle) -> None:
         self.style = style
-        self.__analyzed = False
+        self.__analyzed = False # variable non accessible selon l'editeur
 
         self.__soil = {}
         for mineral in GroundMineral:
@@ -76,6 +76,7 @@ class Ground:
     def style(self) -> GroundStyle:
         return self.__style
 
+    # sets the mineral with the highest level as the predominant mineral
     @predominant_mineral.setter
     def predominant_mineral(self, mineral) -> None:
         self.__predominant_mineral = mineral

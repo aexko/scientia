@@ -59,7 +59,7 @@ class Mission2Moon(arcade.Window):
         self.__time_since_last_move = 0.0
         self.__moving_east = self.__moving_west = self.__moving_north = self.__moving_south = False
 
-        self.__analyze = False
+        self.__analyze = False # variable non accessible selon l'editeur
         self.__time_since_last_blink = 0.0
         self.__show_rover = True
 
@@ -94,8 +94,10 @@ class Mission2Moon(arcade.Window):
         elif symbol == arcade.key.RIGHT:
             self.__moving_east = True
         elif symbol == arcade.key.SPACE:
-            self.__analyze = True
+            self.__analyze = True # variable non accessible selon l'editeur
             self.__analyze_thread.analyze(self.__mark_get_analysis_results)
+            
+            
 
 # commandes pour controler le rover 
     def on_key_release(self, symbol: int, modifiers: int):
@@ -205,6 +207,7 @@ def main() -> None:
 
     m2m = Mission2Moon()
     m2m.build_moon()
+    m2m.set_rover_position(m2m.create_start_position())
     m2m.set_rover_position(m2m.create_start_position())
 
     arcade.run()
