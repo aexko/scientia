@@ -14,12 +14,12 @@ public class PhotoSeuleActivity extends AppCompatActivity {
 
     // creating a string variable, image view variable
     // and a variable for our scale gesture detector class.
-    String imgPath;
+    String cheminImage;
     private ImageView imageView;
     private ScaleGestureDetector scaleGestureDetector;
 
     // on below line we are defining our scale factor.
-    private float mScaleFactor = 1.0f;
+    private float mScaleFactor = 2.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +27,16 @@ public class PhotoSeuleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo_seule);
 
         // on below line getting data which we have passed from our adapter class.
-        imgPath = getIntent().getStringExtra("imgPath");
+        cheminImage = getIntent().getStringExtra("cheminImage");
 
         // initializing our image view.
-        imageView = findViewById(R.id.idIVImage);
+        imageView = findViewById(R.id.photo_seule);
 
         // on below line we are initializing our scale gesture detector for zoom in and out for our image.
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
         // on below line we are getting our image file from its path.
-        File imgFile = new File(imgPath);
+        File imgFile = new File(cheminImage);
 
         // if the file exists then we are loading that image in our image view.
         if (imgFile.exists()) {
@@ -61,7 +61,7 @@ public class PhotoSeuleActivity extends AppCompatActivity {
             // inside on scale method we are setting scale
             // for our image in our image view.
             mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 1.0f));
 
             // on below line we are setting
             // scale x and scale y to our image view.

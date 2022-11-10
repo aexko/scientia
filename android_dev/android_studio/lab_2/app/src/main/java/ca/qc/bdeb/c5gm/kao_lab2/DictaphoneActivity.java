@@ -1,16 +1,15 @@
 package ca.qc.bdeb.c5gm.kao_lab2;
 
 import android.Manifest;
-import android.content.ContextWrapper;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,160 +17,244 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.io.IOException;
+
+// SOURCE: https://developer.android.com/guide/topics/media/mediarecorder#java
 
 public class DictaphoneActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-//    private String fileName = "recorded.3gp";
+    private static String fileName = null;
 
-    //    private final RecordButton recordButton = null;
-//    private final PlayButton playButton = null;
-    private MediaRecorder recorder;
-    private MediaPlayer player;
-    // Requesting permission to RECORD_AUDIO
+    //    private RecordButton recordButton = null;
+    private MediaRecorder recorder = null;
+
+    //    private PlayButton   playButton = null;
+    private MediaPlayer   player = null;
+
+    private FloatingActionButton fbtn_enregistrer;
+    private FloatingActionButton fbtn_jouer;
+
+    // Demande des permissions pour enregistrer
     private boolean permissionToRecordAccepted = false;
-    private FloatingActionButton btn_enregistrer, btn_jouer;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
+    // Boolean pour savoir si l'enregistrement est en cours
+    private boolean enTrainDenregistrer = false;
 
-    // Requesting permission to RECORD_AUDIO
-    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    // Boolean pour savoir si l'audio joue
+    private boolean enTrainDeJouerAudio = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictaphone);
+        // Record to the external cache directory for visibility
+        fileName = getExternalCacheDir().getAbsolutePath();
+        fileName += "/audiorecordtest.3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
-//        fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
+        fbtn_enregistrer = findViewById(R.id.btn_enregistrer);
+        fbtn_jouer = findViewById(R.id.btn_jouer);
 
-        btn_enregistrer = findViewById(R.id.btn_enregistrer);
-        btn_jouer = findViewById(R.id.btn_jouer);
-
-        btn_enregistrer.setOnClickListener(new View.OnClickListener() {
-            private boolean enregistrementEnCours = true;
-
+        fbtn_enregistrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (enregistrementEnCours) {
-                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_stop_24);
-                    // TRUE
-                    Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
-
-                    enregistrementEnCours = false;
+                if(enTrainDenregistrer)
+                {
                     stopRecording();
-                } else {
-                    btn_enregistrer.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24);
-                    // FALSE
-                    Log.d("Enregistrer", "enregistrementEnCours " + enregistrementEnCours);
-                    enregistrementEnCours = true;
+                    Toast.makeText(DictaphoneActivity.this,
+                            "Arrêt de l'enregistrement ...", Toast.LENGTH_SHORT).show();
+
+                    enTrainDenregistrer = false;
+                    Log.d("etatEnregistrer", "enTrainDenregistrer?: " + enTrainDenregistrer);
+
+                    // l'écran reste allumé
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    Log.d("etatEnregistrer", "ECRAN RESTE PAS ALLUME");
+                }
+                else
+                {
                     startRecording();
+                    Toast.makeText(DictaphoneActivity.this,
+                            "Démarrage de l'enregistrement ...", Toast.LENGTH_SHORT).show();
+
+                    enTrainDenregistrer = true;
+                    Log.d("etatEnregistrer", "enTrainDenregistrer?: " + enTrainDenregistrer);
+
+                    // l'écran reste allumé
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    Log.d("etatEnregistrer", "ECRAN RESTE ALLUME");
+
                 }
             }
-
         });
 
-        btn_jouer.setOnClickListener(new View.OnClickListener() {
-            private boolean jouerEnCours = true;
-
+        fbtn_jouer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (jouerEnCours) {
-                    btn_jouer.setImageResource(R.drawable.ic_baseline_stop_24);
-
-                    jouerEnCours = false;
-                    // TRUE
-
-                    Log.d("Jouer", "jouer " + jouerEnCours);
+                if(enTrainDeJouerAudio)
+                {
                     stopPlaying();
-                } else {
-                    btn_jouer.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-
-                    jouerEnCours = true;
-                    // FALSE
-                    Log.d("Jouer", "jouer " + jouerEnCours);
+                }
+                else
+                {
                     startPlaying();
                 }
-                jouerEnCours = !jouerEnCours;
-
             }
         });
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
+        switch (requestCode){
             case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
-        if (!permissionToRecordAccepted) finish();
-
+        if (!permissionToRecordAccepted ) finish();
     }
 
+    /**
+     * Détermine l'état de l'enregistrement
+     * @param start
+     */
+    private void onRecord(boolean start) {
+        if (start) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
 
     private void startPlaying() {
+
+        fbtn_jouer.setImageResource(R.drawable.ic_baseline_stop_24);
+        Toast.makeText(DictaphoneActivity.this,
+                "Jouer ...", Toast.LENGTH_SHORT).show();
+        enTrainDeJouerAudio = true;
+        Log.d("etatJouer", "onClick: " + enTrainDeJouerAudio);
+
+        player = new MediaPlayer();
         try {
-            player = new MediaPlayer();
-            player.setDataSource(getRecordingFilePath());
+            player.setDataSource(fileName);
             player.prepare();
             player.start();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
-        Log.d("ACTIONS", "startPlaying: ");
     }
 
     private void stopPlaying() {
-        player.release();
-        Log.d("ACTIONS", "stopPlaying: ");
 
+        Toast.makeText(DictaphoneActivity.this,
+                "Arrêter ...", Toast.LENGTH_SHORT).show();
+        enTrainDeJouerAudio = false;
+        Log.d("etatJouer", "onClick: " + enTrainDeJouerAudio);
+        fbtn_jouer.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+        player.release();
+        player = null;
     }
 
     private void startRecording() {
+        // changement d'image à stop
+        fbtn_enregistrer.setImageResource(R.drawable.ic_baseline_stop_24);
+
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
         try {
-            recorder = new MediaRecorder();
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            recorder.setOutputFile(getRecordingFilePath());
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             recorder.prepare();
-            recorder.start();
-            Log.d("ACTIONS", "startRecording: ");
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
 
-
+        recorder.start();
     }
 
     private void stopRecording() {
+        // changement d'image à record
+        fbtn_enregistrer.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24);
+
         recorder.stop();
         recorder.release();
         recorder = null;
-        Log.d("ACTIONS", "stopRecording: ");
-
     }
 
-    private String getRecordingFilePath() {
-        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        File musicDirectory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File file = new File(musicDirectory, "test_audio" + ".mp3");
-        return file.getPath();
-    }
+    class RecordButton extends androidx.appcompat.widget.AppCompatButton {
+        boolean enTrainDenregistrer = true;
 
-    // SOURCE: https://stackoverflow.com/questions/4778754/how-do-i-kill-an-activity-when-the-back-button-is-pressed
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            finish();
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(enTrainDenregistrer);
+                if (enTrainDenregistrer) {
+                    setText("Arrêter l'enregistrement");
+                } else {
+                    setText("Démarrer l'enregistrement");
+                }
+                enTrainDenregistrer = !enTrainDenregistrer;
+            }
+        };
+
+        public RecordButton(Context ctx) {
+            super(ctx);
+            setText("Commencer l'enregistrement");
+            setOnClickListener(clicker);
         }
-        return super.onKeyDown(keyCode, event);
+    }
+
+    class PlayButton extends androidx.appcompat.widget.AppCompatButton {
+        boolean mStartPlaying = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Arrêter l'écoute de l'enregistrement");
+                } else {
+                    setText("Démarrer l'écoute de l'enregistrement");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
+
+        public PlayButton(Context ctx) {
+            super(ctx);
+            setText("Démarrer l'écoute de l'enregistrement");
+            setOnClickListener(clicker);
+        }
+    }
+
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
+        }
     }
 }

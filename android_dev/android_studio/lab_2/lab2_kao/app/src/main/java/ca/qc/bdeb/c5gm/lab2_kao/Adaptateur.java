@@ -37,10 +37,10 @@ public class Adaptateur extends RecyclerView.Adapter<Adaptateur.RecyclerViewHold
     }
 
 
-    @Override
-    public void onBindViewHolder(@NonNull Adaptateur.RecyclerViewHolder holder, int position) {
-
-    }
+//    @Override
+//    public void onBindViewHolder(@NonNull Adaptateur.RecyclerViewHolder holder, int position) {
+//
+//    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
