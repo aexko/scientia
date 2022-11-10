@@ -25,11 +25,17 @@ public class GalerieActivity extends AppCompatActivity {
     TextView numero_galerie;
 
     private static final int READ_PERMISSION_CODE = 101;
+    private String [] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+    private boolean permissionToRecordAccepted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galerie);
+
+        ActivityCompat.requestPermissions(this, permissions, READ_PERMISSION_CODE);
+
 
         numero_galerie = findViewById(R.id.numero_galerie);
         recyclerView = findViewById(R.id.recyclerview_galerie);
@@ -40,23 +46,53 @@ public class GalerieActivity extends AppCompatActivity {
         else {
             loadImages();
         }
+//
+//        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//            // Should we show an explanation?
+//            if (shouldShowRequestPermissionRationale(
+//                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//                // Explain to the user why we need to read the contacts
+//            }
+//
+//            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                    READ_PERMISSION_CODE);
+//
+//            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+//            // app-defined int constant that should be quite unique
+//
+//            return;
+//        }
 
+//       loadImages();
     }
 
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if (requestCode == READ_PERMISSION_CODE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(this, "Acces stockage autorise", Toast.LENGTH_SHORT).show();
+//                loadImages();
+//            } else {
+//                Toast.makeText(this, "Acces stockage refuse", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }
+//    }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == READ_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Acces stockage autorise", Toast.LENGTH_SHORT).show();
-                loadImages();
-            } else {
-                Toast.makeText(this, "Acces stockage refuse", Toast.LENGTH_SHORT).show();
-
-            }
+        switch (requestCode) {
+            case READ_PERMISSION_CODE:
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
         }
-
+        if (!permissionToRecordAccepted) finish();
 
     }
 
@@ -68,7 +104,7 @@ public class GalerieActivity extends AppCompatActivity {
 
             @Override
             public void onPhotoClick(String path) {
-                Toast.makeText(GalerieActivity.this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GalerieActivity.this, "" + path, Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(galerieAdapter);

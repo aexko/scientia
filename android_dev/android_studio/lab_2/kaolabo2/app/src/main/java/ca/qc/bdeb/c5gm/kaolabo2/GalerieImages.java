@@ -19,11 +19,10 @@ public class GalerieImages {
         String[] projection = {MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
 
         String orderBy = MediaStore.Video.Media.DATE_TAKEN;
-        cursor = context.getContentResolver().query(uri, projection, null, null, "DESC");
+        cursor = context.getContentResolver().query(uri, projection, null, null, orderBy+" DESC");
 
         colonne_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-
-        // get older name
+        colonne_index_folder_name = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);// get older name
         // col
 
         while (cursor.moveToNext()) {
