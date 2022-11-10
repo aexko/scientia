@@ -16,14 +16,20 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
+/**
+ * SOURCE:
+ *
+ * IMPORTANT
+ * À implémenter dans build.gradle(Module: kao_lab2.app)
+ *     implementation 'com.squareup.picasso:picasso:2.71828'
+ */
+
 public class GalerieActivity extends AppCompatActivity {
 
-    // on below line we are creating variables for
-    // our array list, recycler view and adapter class.
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private ArrayList<String> imagePaths;
-    private RecyclerView imagesRV;
-    private RecyclerViewAdapter imageRVAdapter;
+    private ArrayList<String> cheminsImages;
+    private RecyclerView images;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +40,8 @@ public class GalerieActivity extends AppCompatActivity {
 
         // creating a new array list and
         // initializing our recycler view.
-        imagePaths = new ArrayList<>();
-        imagesRV = findViewById(R.id.idRVImages);
+        cheminsImages = new ArrayList<>();
+        images = findViewById(R.id.images);
 
         // we are calling a method to request
         // the permissions to read external storage.
@@ -43,15 +49,19 @@ public class GalerieActivity extends AppCompatActivity {
 
         // in this method we are preparing our recycler view.
         // on below line we are initializing our adapter class.
-        imageRVAdapter = new RecyclerViewAdapter(GalerieActivity.this, imagePaths);
+        recyclerViewAdapter = new RecyclerViewAdapter(GalerieActivity.this, cheminsImages);
 
         // on below line we are creating a new grid layout manager.
         GridLayoutManager manager = new GridLayoutManager(GalerieActivity.this, 4);
 
         // on below line we are setting layout
         // manager and adapter to our recycler view.
-        imagesRV.setLayoutManager(manager);
-        imagesRV.setAdapter(imageRVAdapter);
+        images.setLayoutManager(manager);
+        images.setAdapter(recyclerViewAdapter);
+
+        recyclerViewAdapter.notifyDataSetChanged();
+
+
         // calling a method to
         // prepare our recycler view.
 //        prepareRecyclerView();
@@ -79,11 +89,6 @@ public class GalerieActivity extends AppCompatActivity {
     private void requestPermission() {
         //on below line we are requesting the read external storage permissions.
         ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-    }
-
-    private void prepareRecyclerView() {
-
-
     }
 
     private void getImagePath() {
@@ -121,9 +126,9 @@ public class GalerieActivity extends AppCompatActivity {
 
                 // after that we are getting the image file path
                 // and adding that path in our array list.
-                imagePaths.add(cursor.getString(dataColumnIndex));
+                cheminsImages.add(cursor.getString(dataColumnIndex));
             }
-            imageRVAdapter.notifyDataSetChanged();
+//            imageRVAdapter.notifyDataSetChanged();
             // after adding the data to our
             // array list we are closing our cursor.
             cursor.close();

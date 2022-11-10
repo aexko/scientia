@@ -49,20 +49,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Picasso.get().load(imgFile).placeholder(R.drawable.ic_launcher_background).into(holder.imageIV);
 
             // on below line we are adding click listener to our item of recycler view.
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    // inside on click listener we are creating a new intent
-//                    Intent i = new Intent(context, PhotoSeuleActivity.class);
-//
-//                    // on below line we are passing the image path to our new activity.
-//                    i.putExtra("imgPath", imagePathArrayList.get(position));
-//
-//                    // at last we are starting our activity.
-//                    context.startActivity(i);
-//                }
-//            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // inside on click listener we are creating a new intent
+                    Intent i = new Intent(context, PhotoSeuleActivity.class);
+
+                    // on below line we are passing the image path to our new activity.
+                    i.putExtra("cheminImage", imagePathArrayList.get(position));
+
+                    // at last we are starting our activity.
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
@@ -82,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our views with their ids.
-            imageIV = itemView.findViewById(R.id.idIVImage);
+            imageIV = itemView.findViewById(R.id.photo_seule);
         }
     }
 }
