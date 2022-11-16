@@ -38,29 +38,39 @@ class Rover:
         else:
             return {}
 
+
+    
+    
     def move_east(self, moon: Moon) -> None:
         """Déplace le rover vers l'Est."""
         x = self.position[0]
         if moon.get(self.position[0] + 1, self.position[1]).style != GroundStyle.OBSTACLE:
             self.position = [x + 1, self.position[1]]
+        print("MOVE EAST X ", x)
 
     def move_north(self, moon: Moon) -> None:
         """Déplace le rover vers le Nord."""
         y = self.position[1]
         if moon.get(self.position[0], self.position[1] + 1).style != GroundStyle.OBSTACLE:
             self.position = [self.position[0], y + 1]
+            
+        print("MOVE NORTH Y ", y)
+
 
     def move_south(self, moon: Moon) -> None:
         """Déplace le rover vers le Sud."""
         y = self.position[1]
         if moon.get(self.position[0], self.position[1] - 1).style != GroundStyle.OBSTACLE:
             self.position = [self.position[0], y - 1]
+        print("MOVE SOUTH Y ", y)
+
 
     def move_west(self, moon: Moon) -> None:
         """Déplace le rover vers l'Ouest'."""
         x = self.position[0]
         if moon.get(self.position[0] - 1, self.position[1]).style != GroundStyle.OBSTACLE:
             self.position = [x - 1, self.position[1]]
+        print("MOVE WEST X ", x)
 
     @property
     def analyzing(self) -> bool:
