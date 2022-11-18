@@ -15,12 +15,17 @@ app.use(morgan("dev"));
 
 app.use('/api/goals', require('./routes/goalRoutes'));
 
+
+
 // using the error handler middleware instead of the default one
 app.use(errorHandler);
 
 // middleware to handle raw json
 app.use(express.json()); // raw json
 app.use(express.urlencoded({ extended: true })); // form data
+
+// body parser
+// app.use(body-parser.json());
 
 
 app.listen(port, () => {
