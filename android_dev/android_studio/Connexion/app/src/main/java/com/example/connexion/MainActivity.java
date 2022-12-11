@@ -2,7 +2,11 @@ package com.example.connexion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvResult;
     private TextView tv2;
     private MonAPI client;
+
+    private Button button1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         tvResult = findViewById(R.id.tv_result);
         tv2 = findViewById(R.id.textView2);
         client = MonApiClient.getRetrofit().create(MonAPI.class);
+
+        button1 = (Button) findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+            }
+        });
 
         HashMap<String, Object> user = new HashMap<>();
         HashMap<String, Object> test = new HashMap<>();

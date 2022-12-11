@@ -8,11 +8,11 @@ import java.util.UUID;
 public class ComptePOJO implements Serializable {
     @SerializedName("id")
     private UUID uuid;
-    // @SerializedName("nom")
+     @SerializedName("nom")
     private String nom;
-    // @SerializedName("prenom")
+     @SerializedName("prenom")
     private String prenom;
-    // @SerializedName("email")
+     @SerializedName("email")
     private String email;
 
 

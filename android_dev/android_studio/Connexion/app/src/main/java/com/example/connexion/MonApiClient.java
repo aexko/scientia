@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MonApiClient {
     private static Retrofit retrofit = null;
     private static OkHttpClient client = null;
-    private static String adresse = "192.168.56.1";
-    private static String server_url = "http://"+adresse+":8888/";
+    private static final String adresse = "192.168.56.1";
+
     public static Retrofit getRetrofit(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -22,6 +22,7 @@ public class MonApiClient {
                     .addInterceptor(interceptor).build();
         }
         if (retrofit == null) {
+            String server_url = "http://" + adresse + ":8888/";
             retrofit = new Retrofit.Builder()
                     .baseUrl(server_url)
                     .addConverterFactory(GsonConverterFactory.create())
