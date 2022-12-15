@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         MonAPI client = MonAPIClient.getRetrofit().create(MonAPI.class);
         HashMap<String, Object> user = new HashMap<>();
-        ConnectUtilis connectUtils = new ConnectUtilis("10.144.22.87:8888", );
+        ConnectUtilis connectUtils = new ConnectUtilis("10.144.22.87:8888",  );
         user.put("id_compte", connectUtils.getAuthId()); client.testerConnexion(connectUtils.getAuthToken(), user).enqueue(
                 new Callback<ResponseBody>() {
                     @Override
