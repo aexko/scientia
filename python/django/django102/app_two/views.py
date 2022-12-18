@@ -12,20 +12,20 @@ def djangorocks(request):
 def pictures_detail(request, category, year=0, month=0, day=0):
     template = loader.get_template('app_two/index.html')
 
-    picture = {
-        'filename': 'moi.png',
-        'categories': ['color', 'landscape', 'art', 'music', 'ice skating'],
-    }
-
     context = {
-        'title': 'TITLEEEE WOeweowerowerw we asodkoikwoiq qwoi',
-        'category': category,
-        'description': 'This <b>picture</b> was taken in Montreal',
-        'year': year,
-        'month': month,
-        'day': day,
-        'picture': picture,
+        'pictures': [
+            {
+                'name': 'Ice Skating',
+                'filename': 'ice_skating.jpg',
+            },
+            {
+                'name': 'Goose',
+                'filename': 'goose.jpg',
+            },
+            {
+                'name': 'FIFA',
+                'filename': 'fifa.webp',
+            },
+        ]
     }
     return HttpResponse(template.render(context, request))
-
-
