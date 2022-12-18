@@ -8,7 +8,7 @@
 
 {# Title block here #}
 <!-- commentaire -->
-<h1>{{ title }}</h1>
+<h1>{{ title|title }} - nb characters: {{ title|length}}</h1>
 
 {% comment "This is a commented block, not visible in the generated HTMl"%}
 <h2>Test title</h2>
@@ -22,10 +22,45 @@
 </div>
 
 <h2>Access variable detail</h2>
+
+<table>
+    <tr style="background-color: {% cycle '#80e27e' '#087f23' as rowcolors %};">
+        <td>Resolution</td>
+        <td>1920x1080</td>
+    </tr>
+    <tr style="background-color: {% cycle rowcolors %}">
+        <td>Location</td>
+        <td>Tokyo</td>
+    </tr>
+    <tr style="background-color: {% cycle rowcolors %}">
+        <td>Location</td>
+        <td>Montreal</td>
+    </tr>
+    <tr style="background-color: {{ rowcolors }}">
+        <td>Location</td>
+        <td>Paris</td>
+    </tr>
+</table>
+
 <div>
     filename: {{ picture.filename }} <br>
-    first category: {{ picture.categories.0 }}
+    first category: {{ picture.categories.0 }} <br>
+    <h3>All categories</h3>
+    {% for category in picture.categories %}
+    {{ category }}
+    {% endfor %} <br>
+    description: {{ description|safe|striptags }}
+
+    <h3>All categories with filter: </h3>
+    {{ picture.categories|join:', ' }}
 </div>
+{% if day == 19 %}
+<h3>Lucky number day </h3>
+{% elif day == 30 %}
+<h3>End of month</h3>
+{% else %}
+<h3>Nothing cool</h3>
+{% endif %}
 
 </body>
 </html>

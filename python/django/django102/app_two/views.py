@@ -14,12 +14,13 @@ def pictures_detail(request, category, year=0, month=0, day=0):
 
     picture = {
         'filename': 'moi.png',
-        'categories': ['color', 'landscape',],
+        'categories': ['color', 'landscape', 'art', 'music', 'ice skating'],
     }
 
     context = {
-        'title': 'TITLEEEE',
+        'title': 'TITLEEEE WOeweowerowerw we asodkoikwoiq qwoi',
         'category': category,
+        'description': 'This <b>picture</b> was taken in Montreal',
         'year': year,
         'month': month,
         'day': day,
