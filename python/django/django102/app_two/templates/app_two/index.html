@@ -5,8 +5,27 @@
     <title>Index App_TWO</title>
 </head>
 <body>
-<h1>This is App_TWO</h1>
-<div style="background-color: aqua">WOOWWWWWW</div>
+
+{# Title block here #}
+<!-- commentaire -->
+<h1>{{ title }}</h1>
+
+{% comment "This is a commented block, not visible in the generated HTMl"%}
+<h2>Test title</h2>
+{% endcomment %}
+
+<div>
+    Category: {{ category }} <br>
+    Year: {{ year }} <br>
+    Month: {{ month }} <br>
+    Day: {{ day }} <br>
+</div>
+
+<h2>Access variable detail</h2>
+<div>
+    filename: {{ picture.filename }} <br>
+    first category: {{ picture.categories.0 }}
+</div>
 
 </body>
 </html>
