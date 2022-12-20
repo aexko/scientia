@@ -2,18 +2,13 @@ package com.example.connexion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,68 +19,70 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv2;
     private MonAPI client;
 
+    private EditText username, password;
     private Button button1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvResult = findViewById(R.id.tv_result);
-        tv2 = findViewById(R.id.textView2);
+        username = findViewById(R.id.username1);
+        password = findViewById(R.id.password1);
+
+
+
         client = MonApiClient.getRetrofit().create(MonAPI.class);
 
         button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
+                String inputUsername = username.getText().toString();
+                String inputMdp = password.getText().toString();
+                connecter(inputUsername, inputMdp);
             }
         });
 
-        HashMap<String, Object> user = new HashMap<>();
-        HashMap<String, Object> test = new HashMap<>();
-        test.put("email", "prof1@test.com");
-        test.put("mot_de_passe", "secret");
-        user.put("id_compte", ConnectUtils.authID);
-        client.testerConnexion(ConnectUtils.authToken, user).enqueue(
-                new Callback<ResponseBody>() {
+
+    }
+
+    private void connecter(String inputUsername, String inputMdp) {
+
+        LoginData loginData =new LoginData(inputUsername, inputMdp);
+        client.connecter(loginData).enqueue(
+                new Callback<Compte>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.code() != 200) {
-                            connecter(test);
+                    public void onResponse(Call<Compte> call, Response<Compte> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "OK!", Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        connecter(test);
-                        Toast.makeText(MainActivity.this, "FAIL", Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<Compte> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "NONOK", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
+
+//        client.connecter(test).enqueue(new Callback<Compte>() {
+//            @Override
+//            public void onResponse(Call<Compte> call, Response<Compte> response) {
+//
+//
+//                Compte json = response.body();
+//
+//                String str = "Nom : " + json.nom + "\nEmail : " + json.email;
+//                Toast.makeText(Login.this, "OK: " + str, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Compte> call, Throwable t) {
+//                Toast.makeText(Login.this, "OK: " + "FAIL", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
-    private void connecter(HashMap<String, Object> test) {
-
-        client.connecter(test).enqueue(new Callback<Compte>() {
-            @Override
-            public void onResponse(Call<Compte> call, Response<Compte> response) {
-
-                tvResult.setText("Not a failure \uD83D\uDCAF");
-
-                Compte json = response.body();
-
-                String str = "Nom : " + json.nom + "\nEmail : " + json.email;
-
-                tv2.setText(str);
-            }
-
-            @Override
-            public void onFailure(Call<Compte> call, Throwable t) {
-                tvResult.setText("Failure");
-            }
-        });
-    }
 
 }

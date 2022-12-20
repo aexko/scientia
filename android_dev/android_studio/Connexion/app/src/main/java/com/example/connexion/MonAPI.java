@@ -20,7 +20,7 @@ public interface MonAPI {
             "Content-Type:application/json",
             "Authorization:Token"
     })
-    Call<Compte> connecter(@Body HashMap<String, Object> loginData);
+    Call<Compte> connecter(@Body LoginData loginData);
 
     @POST("/auth/deconnexion")
     Call<ResponseBody> deconnecter(@Header("Authorization") String token);
