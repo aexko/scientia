@@ -5,7 +5,11 @@ from django.http import HttpResponse
 from django.template import loader
 
 
-def details_utilisateur(request, name):
+def liste_utilisateur(request):
+    return HttpResponse("Liste utilisateurs")
+
+
+def details_utilisateur(request):
     template = loader.get_template('peoplebook/index.html')
     people = {
         'han': {
@@ -29,4 +33,4 @@ def details_utilisateur(request, name):
             'picture': 'img/wonderwoman.jpg',
         }
     }
-    return HttpResponse((people, request))
+    return HttpResponse(people, request)
