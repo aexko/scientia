@@ -10,7 +10,7 @@ class Song(models.Model):
     lyrics = models.TextField(blank=True)
 
     # definir ca pour que ca soit plus representatif au lieu d'une simple adresse qui veut rien dire
-    # pk est le id, on peut utiliser id, mais il vaut mieux utiliser pk
+    # pk est le id, on peut utiliser id, mais il vaut mieux utiliser pk, mais c'est seulement qd elle est save()
     def __str__(self):
-        return self.pk
+        return '{} {}'.format(self.name, self.duration)
 
