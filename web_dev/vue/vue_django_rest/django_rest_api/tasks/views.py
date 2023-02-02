@@ -78,6 +78,6 @@ def task_detail(request, pk):
     elif request.method == "DELETE":
         # suppression de la tache
         task.delete()
-        
+
         # retourne une reponse vide
         return HttpResponse(status=204)
