@@ -53,31 +53,26 @@ def tasks(request):
 @csrf_exempt
 def task_detail(request, pk):
     try:
+        # obtain the task with the passed id.
         task = Task.objects.get(pk=pk)
     except:
+        # respond with a 404 error message
         return HttpResponse(status=404)
-
-    if request.method == "PUT":
-        # parse les donnees arrivantes
+    if request.method == 'PUT':
+        # parse the incoming information
         data = JSONParser().parse(request)
-
-        # cree une instance avec le serializer
+        # instanciate with the serializer
         serializer = TaskSerializer(task, data=data)
-
+        # check whether the sent information is okay
         if serializer.is_valid():
-
-            # verifie si les donnees envoyees sont valides
+            # if okay, save it on the database
             serializer.save()
-
-            # retourne une reponse json avec les donnees qui ont ete envoyees
-            return JsonResponse(serializer.data)
-
-        # sinon retourne une erreur 404 avec les erreurs
-        return HttpResponse(status=404)
-
-    elif request.method == "DELETE":
-        # suppression de la tache
+            # provide a JSON response with the data that was submitted
+            return JsonResponse(serializer.data, status=201)
+        # provide a JSON response with the necessary error information
+        return JsonResponse(serializer.errors, status=400)
+    elif request.method == 'DELETE':
+        # delete the task
         task.delete()
-
-        # retourne une reponse vide
-        return HttpResponse(status=204)
+        # return a no content response.
+        return render(request, HttpResponse(status=204))
