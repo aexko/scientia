@@ -9,28 +9,11 @@ defineProps({
 
 <template>
   <h1>HELLO WORLD</h1>
+
+  <p>
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum doloremque
+    dolorum possimus obcaecati cumque rerum consequuntur eius consequatur ad ex
+    fugiat inventore animi molestiae, quidem ipsa exercitationem qui?
+    Consectetur, maiores.
+  </p>
 </template>
-
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>
