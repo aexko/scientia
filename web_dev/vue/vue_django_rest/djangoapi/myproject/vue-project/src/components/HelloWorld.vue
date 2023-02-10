@@ -6,6 +6,7 @@
       </v-col>
 
       <v-col class="mb-4">
+        <v-alert type="success"></v-alert>
         <h1 class="display-2 font-weight-bold mb-3">
           Welcome to the Vuetify 3 Beta
         </h1>
