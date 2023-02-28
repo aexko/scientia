@@ -4,13 +4,8 @@ export const useTaskStore = defineStore('taskStore', {
   state: () => ({
     tasks: [
       // ici axios
-      { id: 1, title: 'Task 1', completed: false },
-      { id: 2, title: 'Task 2', completed: true },
-      { id: 3, title: 'Task 3', completed: false },
-      { id: 4, title: 'Task 4', completed: true },
-      { id: 5, title: 'Task 5', completed: false },
-      { id: 6, title: 'Task 6', completed: true }
     ],
+    loading: false,
     name: 'un truc random on peut add'
   }),
   getters: {
@@ -25,6 +20,57 @@ export const useTaskStore = defineStore('taskStore', {
     },
     totalCount: (state) => {
       return state.tasks.length
+    }
+  },
+  actions: {
+    async getTasks() {
+      this.loading = true
+      const res = await fetch('http://localhost:3000/tasks')
+      const data = await res.json()
+      this.tasks = data
+      this.loading = false
+    },
+
+    async addTask(task) {
+      this.tasks.push(task)
+      const res = await fetch('http://localhost:3000/tasks', {
+        method: 'POST',
+        body: JSON.stringify(task),
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      if (res.error) {
+        console.log(res.error)
+      }
+    },
+    async deleteTask(id) {
+      this.tasks = this.tasks.filter((t) => {
+        return t.id !== id
+      })
+
+      const res = await fetch('http://localhost:3000/tasks/'+ id, {
+        method: 'DELETE',
+      })
+
+      if (res.error) {
+        console.log(res.error)
+      }
+
+    },
+    async toggleCompleted(id) {
+      const task = this.tasks.find((t) => t.id === id)
+      task.completed = !task.completed
+
+      const res = await fetch('http://localhost:3000/tasks/'+ id, {
+        method: 'PATCH',
+        body: JSON.stringify({ completed: task.completed}),
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      if (res.error) {
+        console.log(res.error)
+      }
+
     }
   }
 })
