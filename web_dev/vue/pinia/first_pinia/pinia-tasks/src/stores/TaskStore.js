@@ -48,29 +48,27 @@ export const useTaskStore = defineStore('taskStore', {
         return t.id !== id
       })
 
-      const res = await fetch('http://localhost:3000/tasks/'+ id, {
-        method: 'DELETE',
+      const res = await fetch('http://localhost:3000/tasks/' + id, {
+        method: 'DELETE'
       })
 
       if (res.error) {
         console.log(res.error)
       }
-
     },
     async toggleCompleted(id) {
       const task = this.tasks.find((t) => t.id === id)
       task.completed = !task.completed
 
-      const res = await fetch('http://localhost:3000/tasks/'+ id, {
+      const res = await fetch('http://localhost:3000/tasks/' + id, {
         method: 'PATCH',
-        body: JSON.stringify({ completed: task.completed}),
+        body: JSON.stringify({ completed: task.completed }),
         headers: { 'Content-Type': 'application/json' }
       })
 
       if (res.error) {
         console.log(res.error)
       }
-
     }
   }
 })
