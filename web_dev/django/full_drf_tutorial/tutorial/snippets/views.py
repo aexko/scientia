@@ -1,6 +1,5 @@
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
-from rest_framework import generics
 from snippets.serializers import UserSerializer
 from django.contrib.auth.models import User
 
@@ -52,13 +51,3 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-
-@api_view(["GET"])
-def api_root(request, format=None):
-    return Response(
-        {
-            "users": reverse("user-list", request=request, format=format),
-            "snippets": reverse("snippet-list", request=request, format=format),
-        }
-    )
