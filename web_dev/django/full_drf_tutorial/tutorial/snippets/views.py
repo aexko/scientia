@@ -22,6 +22,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions
 
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -51,3 +54,8 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+def get_csrf_token(request):
+    token = get_token(request)
+    return JsonResponse({"token": token})
