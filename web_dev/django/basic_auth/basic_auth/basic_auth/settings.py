@@ -14,3 +14,4 @@ REST_FRAMEWORK = {
     "rest_framework.authtoken",
     "djoser",
     "corsheaders",
+    "corsheaders.middleware.CorsMiddleware",
