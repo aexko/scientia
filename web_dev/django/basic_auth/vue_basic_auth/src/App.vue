@@ -16,3 +16,12 @@
 </div>
 </template>
 
+<script setup>
+import axios from 'axios'
+import { useUserStore } from './store/user.js'
+
+const userStore = useUserStore()
+userStore.initializeStore
+console.log(userStore.token)
+
+</script>
