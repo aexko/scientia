@@ -10,3 +10,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+    "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
+    "corsheaders",
