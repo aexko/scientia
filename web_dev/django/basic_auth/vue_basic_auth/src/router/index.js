@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+// router.beforeEach((to) => {
+// 	const store = useStore();
+// 	if (to.meta.requiresAuth && !store.isLoggedIn) return "/login";
+// });
 const routes = [
 	{
 		path: "/signup",
@@ -13,9 +16,9 @@ const routes = [
 	},
 ];
 
-
 const router = createRouter({
-    routes, history: createWebHistory()
-})
+	routes,
+	history: createWebHistory(),
+});
 
-export default router
+export default router;
