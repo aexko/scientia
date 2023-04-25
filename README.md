@@ -1,3 +1,3 @@
-# learning_is_fun
+# SCIENTIA
 
 Personal notes I keep during my journey
