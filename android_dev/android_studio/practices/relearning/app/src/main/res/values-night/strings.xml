@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="Wow">wow</string>
-    <string name="Make_a_toast">make a toast!</string>
-    <string name="Make_it_count">make it count!</string>
-    <string name="zero">0</string>
-    <string name="Username">username</string>
-    <string name="enter_a_username">enter a username</string>
-</resources>
