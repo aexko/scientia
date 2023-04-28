@@ -2,14 +2,17 @@
 
 int main()
 {
-    int a = 0, b = 1, c = 2, d = 3, e = 4;
-    a = b - c + d * e;
+    int numbers[10];
 
-    // ca le fait sans le % a la fin
-    printf("%d\n", a);
-    // ca le fait avec le % a la fin
-    printf("%d", a);
+    numbers[0] = 10;
+    numbers[1] = 20;
+    numbers[2] = 30;
+    numbers[3] = 40;
+    numbers[4] = 50;
+    numbers[5] = 60;
+    numbers[6] = 70;
 
-    // toujours mettre return 0
+    printf("7th number is %d\n", numbers[6]);
+
     return 0;
 }
