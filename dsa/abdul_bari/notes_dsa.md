@@ -51,3 +51,73 @@ Different symbols can be used depending the programming language, but the genera
 
 #### Space analysis
 - a, b, temp, this is O(1)
+
+## 1.4 Frequency Count method
+
+### Sum of array
+Algorithm_Sum(A, n)
+{
+    sum = 0;                  # this is done once
+    for (i = 0; i < n; i++)   # this is n + 1 because i < n is checked n + 1 (6 times here), and it's the highest. i = 0 is 1. i++ is n.
+    {
+        sum = sum + A[i];     # this is n because the statement is executed 5 times
+    }
+    return sum;               # this is done once
+}
+So the answer for the time complexity would be f(n)=2n+3, so O(n) and that means order of n for now (we are going to see the Big O notation later)
+
+#### Space complexity
+A is n
+n is 1
+sum is 1
+i is 1
+So the answer for space complexity would be s(n)=n+3, so O(n)
+
+### Sum of 2 matrices
+Assume it's 3 * 3 (n * n)
+Algorithm_Add(A,B,n)
+{
+    for (i = 0; i < n; i++)            # n + 1
+    {
+        for (j = 0; j < n; j++)        # n * (n+1)
+        {
+            [i,j] = A[i,j] + B[i,j];   # n * n
+        }
+    }
+}
+
+So time complexity: f(n)=2n^2+2n+1, the biggest degree is ^2, so we write O(n^2) 
+#### Space complexity
+A is n^2 
+B is n^2 
+C is n^2 
+n is 1 
+i is 1 
+j is 1 
+So space complexity: s(n)=3n^2+3, so O(n^2)
+
+### Multiplication of 2 matrices
+Algorithm_Multiply(A,B,n)
+{
+    for (i = 0; i < n; i++)                   # n + 1
+    {
+        for (j = 0; j < n; j++)               # n (n+1)
+        {
+            for (k = 0; k < n; k++)           # n * n (n+1)
+            {
+                c[i,j]=c[i,j]+A[i,k] * B[k,j]   # n * n * n
+            }
+        }
+    }
+}
+
+So time complexity: 2^3 + 3n^2 + 2n + 1, so O(n^3)
+#### Space complexity
+A is n^2 
+B is n^2 
+C is n^2 
+n is 1 
+i is 1
+j is 1 
+k is 1
+So space complexity: s(n)=3n^2+4, so O(n^2)
