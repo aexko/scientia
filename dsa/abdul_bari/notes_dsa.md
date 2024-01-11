@@ -121,3 +121,74 @@ i is 1
 j is 1 
 k is 1
 So space complexity: s(n)=3n^2+4, so O(n^2)
+
+## 1.5.1 Time complexity #1 
+
+for (i = 0; i < n; i++) --- n + 1
+{
+    smt; --- n
+}
+so it's O(n)
+
+for (i = n; i > 0; i--)
+{
+    smt; --- n
+}
+so it's 0(n) too
+
+for (i = 1; i < n; i=i+2)
+{
+    smt; --- n/2
+}
+f(n) = n/2, still O(n)
+
+for (i = 0; i < n; i++) ---- n+1 
+{
+    smt; ------ n*n
+}
+so it's O(n^2)
+
+for (i = 0; i < n; i++)
+{
+    for (j = 0; j < i, j++)
+    {
+        smt;
+    }
+}
+
+| i    | j    | nb of times |
+|----- | ---- | ------------|
+| 0    | 0 x  | 0           |
+| 1    | 0    |             |
+|      | 1 x  | 1           |
+| 2    | 0    |             |
+|      | 1    |             |
+|      | 2 x  | 2           |
+| 3    | 0    |             |
+|      | 1    |             |
+|      | 2    |             |
+|      | 3 x  | 3           |
+
+1 + 2 + 3 + ... + n = (n(n+1)) / 2
+f(n)= (n^2 + 1)/2
+
+
+for (i = 1; p <= n; i++)
+{
+    p = p + i;
+}
+
+| i | p            |
+|---|--------------|
+| 1 | 0+1=1        |
+| 2 | 1+2=3        |
+| 3 | 1+2+3        |
+| 4 | 1+2+3+4      |
+| k | 1+2+3+4+...+k|
+
+Assume p > n, the condition stops
+so, p = (k(k+1))/2 
+      = (k(k+1))/2 > n
+      = k^2 > n
+      = k   > sqrt(n)
+      O(sqrt(n))
