@@ -192,3 +192,44 @@ so, p = (k(k+1))/2
       = k^2 > n
       = k   > sqrt(n)
       O(sqrt(n))
+
+
+
+## 1.6 Classes of functions
+
+O(1) ----- constant
+f(n)=2 -> O(1)
+same for f(n)=5 and f(n)=5000
+
+O(log n) ----- logarithmic
+
+O(n) ----- linear
+f(n)=2n+3 -> O(n)
+same for f(n)=500n+700 and f(n)n/5000+6
+
+O(n^2) ----- quadratic
+
+O(n^3) ----- cubic
+
+O(2^n) ----- exponential
+
+O(3^n) ----- exponential
+
+O(n^n) ----- exponential
+
+
+##  1.7 Compare Class of Functions
+
+1 < log n < sqrt(n) < n < n log n < n^2 < n^3 < .... < 2^n < 3^n ... < n^n
+
+| log n | n | n^2 | 2^n |
+|-------|---|-----|-----|
+| 0     | 1 |  1  | 2   |
+| 1     | 2 |  4  | 4   |
+| 2     | 4 | 16  | 16  |
+| 3     | 8 | 64  | 256 |
+| 3.1   | 9 | 81  | 512 |
+
+even if you have n^100, it's gonna be smaller than 2^n
+you can write n^k, and it's gonna be smaller than 2^n
+    but why? n can be any number so it could be 0 to infinity
